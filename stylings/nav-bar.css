@@ -1,0 +1,38 @@
+@import "./variables.css";
+
+#main-nav-bar {
+    background: var(--COLOR-BACKGROUND-NAVBAR);
+    width: 100%;
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+#main-nav-bar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    list-style: none;
+    gap: 2rem;
+}
+
+header h1,
+header p,
+header a {
+    color: var(--COLOR-TEXT-NAVBAR);
+}
+
+header a {
+    text-decoration: none;
+    padding: 5px;
+}
+
+header a:hover {
+    border-bottom: 2px solid var(--COLOR-TEXT-NAVBAR);
+}

@@ -1,0 +1,223 @@
+/* FILENAME: stylings/profile.css */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap');
+
+body {
+    background: #f5f0e8;
+    font-family: 'DM Sans', sans-serif;
+    color: #1e1208;
+    margin: 0;
+}
+
+/* ── Main ── */
+#profile-main {
+    max-width: 860px;
+    margin: 48px auto 80px;
+    padding: 0 24px;
+}
+
+/* ── Profile photo ── */
+.profile-photo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 36px;
+}
+
+.profile-photo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-photo {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3b1f0e;
+    display: block;
+}
+
+.upload-photo-btn {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: #3b1f0e;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-photo-btn:hover {
+    background: #5c2d0e;
+}
+
+/* ── Fields grid ── */
+.profile-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 24px;
+}
+
+/* ── Field group ── */
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field-group label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #5c2d0e;
+}
+
+/* ── Editable field row ── */
+.editable-field {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #ccc4b4;
+    border-radius: 5px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.editable-field.readonly-field {
+    background: #f0ebe0;
+}
+
+/* ── Input ── */
+.editable-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e1208;
+    background: transparent;
+    /* Fix: browsers dim disabled inputs — force full visibility */
+    opacity: 1;
+    -webkit-text-fill-color: #1e1208;
+}
+
+.editable-input:disabled {
+    cursor: default;
+    color: #1e1208;
+    -webkit-text-fill-color: #1e1208;
+    opacity: 1;
+}
+
+.editable-input[readonly]:disabled {
+    color: #8a7060;
+    -webkit-text-fill-color: #8a7060;
+    opacity: 1;
+    font-style: italic;
+}
+
+.editable-input:not(:disabled) {
+    color: #3b1f0e;
+    -webkit-text-fill-color: #3b1f0e;
+}
+
+/* ── Edit button ── */
+.edit-btn {
+    background: #1e1208;
+    color: #fff;
+    border: none;
+    padding: 0 14px;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-height: 36px;
+}
+
+.edit-btn:hover {
+    background: #3b1f0e;
+}
+
+/* ── Action row ── */
+.profile-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.save-btn {
+    background: #3b1f0e;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-btn:hover { background: #5c2d0e; }
+.save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cancel-btn {
+    background: transparent;
+    color: #5c2d0e;
+    border: 1.5px solid #ccc4b4;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover { border-color: #5c2d0e; }
+
+.logout-btn {
+    background: transparent;
+    color: #3b1f0e;
+    border: 2px solid #3b1f0e;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.logout-btn:hover {
+    background: #3b1f0e;
+    color: #fff;
+}
+
+.profile-action-row:has(.save-btn[style*="inline"]) .logout-btn {
+    margin-left: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+    .profile-fields-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+    #profile-main { margin-top: 24px; padding: 0 16px; }
+    .profile-fields-grid { grid-template-columns: 1fr; }
+    .logout-btn { margin-left: 0; width: 100%; text-align: center; }
+    .profile-action-row { flex-wrap: wrap; }
+}

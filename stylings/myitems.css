@@ -1,0 +1,186 @@
+/* FILENAME: stylings/myitems.css */
+
+@import "./variables.css";
+@import "./main.css";
+@import "./item-grid.css";
+@import "./sidebar.css";
+@import "./additem_popup.css";
+
+/* ── Page Layout ── */
+#browse-layout {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    margin: 1.5rem 0;
+    padding: 0 1.5rem;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+/* ── Item Grid (2-col horizontal cards) ── */
+#item-grid {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+/* ── Horizontal card layout ── */
+.item-card {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 12px rgba(60, 36, 21, 0.2);
+    position: relative;
+    background: #fff;
+}
+
+.item-img,
+.item-card img {
+    width: 150px !important;
+    height: 150px !important;
+    min-width: 100px;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 4px;
+    object-fit: cover;
+    margin: 0 !important;
+    background-color: #e8d5b7;
+    flex-shrink: 0;
+}
+
+.item-img-placeholder {
+    width: 150px !important;
+    height: 150px !important;
+    min-width: 100px;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 4px;
+    margin: 0 !important;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 36px 36px;
+    flex-shrink: 0;
+}
+
+.item-info {
+    flex: 1;
+    min-width: 0;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-body {
+    padding-top: 0 !important;
+    align-items: flex-start;
+    flex: 1;
+    overflow: hidden;
+}
+
+.item-footer {
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* ── Status badge ── */
+.item-status {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    color: #fff;
+    background: #1a7a3c;
+    text-transform: capitalize;
+}
+
+.item-status.borrowed    { background: #d97706; }
+.item-status.unavailable { background: #dc2626; }
+
+/* ── Description ── */
+.item-desc {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.4;
+    margin-top: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Edit button ── */
+.delete-btn {
+    background: #090101;
+    color: #fff;
+    border: none !important;
+    padding: 0.3rem 1rem;
+    margin-left: 5px;
+    font-size: 0.8rem;
+    border-radius: 4px !important;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.delete-btn:hover {
+    background: #3d2a0e;
+    transform: none !important;
+    color: #fff;
+}
+
+
+/* ── Edit button ── */
+.edit-btn {
+    background: #3c2415;
+    color: #fff;
+    border: none !important;
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 4px !important;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.edit-btn:hover {
+    background: #2b1b03;
+    transform: none !important;
+    color: #fff;
+}
+
+
+
+
+/* ── States ── */
+.loading-msg {
+    color: #888;
+    font-size: 0.9rem;
+    grid-column: 1 / -1;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #888;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+    #browse-layout {
+        flex-direction: column;
+    }
+
+    #item-grid {
+        grid-template-columns: 1fr;
+    }
+}

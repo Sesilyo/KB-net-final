@@ -1,0 +1,359 @@
+/* FILENAME: transaction.css */
+
+@import "./variables.css";
+
+/* ── Page Layout ── */
+.tx-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: var(--COLOR-TEXT);
+}
+
+.tx-page-header {
+    margin-bottom: 1.5rem;
+}
+
+.tx-page-sub {
+    font-size: 0.9rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.6;
+    margin: 0;
+}
+
+/* ── Tabs ── */
+.tx-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid #e8d5b7;
+}
+
+.tx-tab {
+    padding: 0.45rem 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--COLOR-TEXT);
+    opacity: 0.5;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: opacity 0.2s, border-color 0.2s;
+}
+
+.tx-tab:hover {
+    opacity: 0.85;
+}
+
+.tx-tab-active,
+.tx-tab.active {
+    opacity: 1;
+    font-weight: 700;
+    border-bottom-color: #3c2415;
+}
+
+/* ── Filter Bar ── */
+.tx-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 8px 16px;
+    background: #fdf6ec;
+    border: 1px solid #e8d5b7;
+    border-radius: 6px;
+    box-shadow: 0px 2px 8px rgba(60, 36, 21, 0.08);
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.tx-filter-label {
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07rem;
+    color: #3c2415;
+    opacity: 0.6;
+}
+
+.tx-filter-option {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    cursor: pointer;
+    color: var(--COLOR-TEXT);
+}
+
+.tx-filter-option input[type="radio"] {
+    accent-color: #3c2415;
+    cursor: pointer;
+}
+
+/* ── Card Container ── */
+.tx-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ── Transaction Card ── */
+.transaction-card {
+    display: flex;          /* flex instead of grid — image fixed, info grows */
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0px 4px 12px rgba(60, 36, 21, 0.15);
+    box-sizing: border-box;
+    transition: box-shadow 0.18s, transform 0.15s;
+}
+
+.transaction-card:hover {
+    box-shadow: 0px 6px 18px rgba(60, 36, 21, 0.25);
+    transform: translateY(-1px);
+}
+
+/* ── Image ── */
+.tx-image-wrap {
+    width: 130px;
+    height: 130px;
+    min-width: 130px;       /* prevents flex from squishing it */
+    overflow: hidden;
+    background: #e8d5b7;
+    border-radius: 4px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.tx-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── Info Block ── */
+.tx-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;                /* takes remaining width */
+    min-width: 0;           /* allows text-overflow to work */
+}
+
+.tx-info h3 {
+    font-weight: 700;
+    margin: 0 0 0.1rem;
+    color: var(--COLOR-TEXT);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tx-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--COLOR-TEXT);
+}
+
+.tx-category {
+    font-size: 0.72rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0;
+}
+
+.tx-id {
+    font-family: monospace;
+    font-size: 0.76rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.4;
+    margin: 0;
+}
+
+.tx-price {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3c2415;
+    margin: 0;
+}
+
+.tx-counterpart {
+    font-size: 0.83rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.65;
+    margin: 0.2rem 0 0;
+}
+
+/* ── Status Badge ── */
+.tx-status-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+    color: #fff;
+    background: #d97706;
+    border-radius: 20px;
+    padding: 3px 12px;
+    width: fit-content;
+    text-transform: capitalize;
+}
+
+.tx-status-label.returned  { background: #1a7a3c; }
+.tx-status-label.active    { background: #d97706; }
+.tx-status-label.overdue   { background: #dc2626; }
+
+/* ── Form Labels ── */
+.tx-info-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--COLOR-TEXT);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+}
+
+/* ── Form Inputs ── */
+.tx-info input[type="datetime-local"],
+.tx-info input[type="number"],
+.tx-info textarea {
+    font-family: inherit;
+    font-size: 0.88rem;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid #e8d5b7;
+    border-radius: 4px;
+    background: #fdf6ec;
+    color: var(--COLOR-TEXT);
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.15s;
+}
+
+.tx-info input:focus,
+.tx-info textarea:focus {
+    outline: none;
+    border-color: #3c2415;
+    background: #fff;
+}
+
+.tx-info textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* ── Returned Checkbox ── */
+.tx-returned-label {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.5rem !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-size: 0.88rem !important;
+    cursor: pointer;
+}
+
+.tx-returned-label input[type="checkbox"] {
+    accent-color: #3c2415;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.tx-info small {
+    font-size: 0.72rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.45;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* ── Save Button ── */
+.tx-save-btn {
+    margin-top: 0.65rem;
+    padding: 0.35rem 1.1rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: #3c2415;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.tx-save-btn:hover {
+    background: #2b1b03;
+}
+
+.tx-save-btn:active {
+    transform: scale(0.95);
+}
+
+/* ── Empty / Error / Loading States ── */
+.tx-empty,
+.tx-error,
+.tx-loading {
+    text-align: center;
+    padding: 3rem 1rem;
+    font-size: 0.92rem;
+    color: var(--COLOR-TEXT);
+    opacity: 0.55;
+    border: 1px dashed #e8d5b7;
+    border-radius: 6px;
+    background: #fdf6ec;
+}
+
+.tx-error {
+    opacity: 1;
+    color: #b91c1c;
+    border-color: #fca5a5;
+    background: #fff1f1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+    .transaction-card {
+        flex-direction: column;
+    }
+
+    .tx-image-wrap {
+        width: 100%;
+        height: 160px;
+        min-width: unset;
+    }
+
+    .tx-filter-bar {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+/* ── Overdue penalty line ── */
+.tx-overdue-fee {
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: #dc2626;
+    margin: 0.2rem 0 0;
+}

@@ -1,0 +1,30 @@
+/* FILENAME: stylings/browse.css */
+
+@import "./variables.css";
+@import "./item-grid.css";
+@import "./sidebar.css";
+
+/* ── Layout ── */
+#browse-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+#item-grid {
+    padding: 20px;
+}
+
+/* ── Desktop layout ── */
+@media (min-width: 768px) {
+    #browse-layout {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        align-items: start;
+        gap: 16px;
+        padding: 16px 24px;
+    }
+}

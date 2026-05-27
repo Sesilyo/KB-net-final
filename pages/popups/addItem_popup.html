@@ -1,0 +1,50 @@
+<div id="add-item-overlay"></div>
+
+<div id="add-item-popup">
+    <div id="add-item-popup-header">
+        <h2>Add New Item</h2>
+        <button id="add-item-close">&times;</button>
+    </div>
+
+    <div class="add-item-field">
+        <label>Item Name *</label>
+        <input id="add-item-name" type="text" placeholder="e.g. Power Drill">
+    </div>
+
+    <div class="add-item-field">
+        <label>Description</label>
+        <textarea id="add-item-desc" rows="3" placeholder="Brief description..."></textarea>
+    </div>
+
+    <div class="add-item-row">
+        <div class="add-item-field">
+            <label>Category *</label>
+            <select id="add-item-category">
+                <option value="" disabled selected>Loading...</option>
+            </select>
+        </div>
+
+        <div class="add-item-field">
+            <label>Status *</label>
+            <select id="add-item-status">
+                <option value="Available">Available</option>
+                <option value="Borrowed">Borrowed</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="add-item-field">
+        <label>Price per Hour (₱) *</label>
+        <input id="add-item-price" type="number" min="0" step="0.01" placeholder="0.00">
+    </div>
+
+    <div class="add-item-field">
+        <label>Image</label>
+        <input id="add-item-image" type="file" accept="image/*">
+    </div>
+
+    <p id="add-item-msg"></p>
+
+    <button id="btn-add-item">Add Item</button>
+</div>

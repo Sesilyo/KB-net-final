@@ -1,0 +1,297 @@
+/* FILENAME: stylings/additem_popup.css */
+
+/* ── Modal wrapper (hidden by default) ── */
+#add-item-modal,
+#edit-item-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+}
+
+/* ── Overlay ── */
+#add-item-overlay,
+#edit-item-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ── Popup box ── */
+#add-item-popup,
+#edit-item-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ── Header ── */
+#add-item-popup-header,
+#edit-item-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-item-popup-header h2,
+#edit-item-popup-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+#add-item-close,
+#edit-item-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: auto;
+    box-shadow: none;
+}
+
+#add-item-close:hover,
+#edit-item-close:hover {
+    color: #111;
+    background: none;
+    transform: none;
+}
+
+/* ── Fields ── */
+.add-item-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.add-item-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.add-item-field input,
+.add-item-field select,
+.add-item-field textarea {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.add-item-field input:focus,
+.add-item-field select:focus,
+.add-item-field textarea:focus {
+    border-color: #111;
+}
+
+.add-item-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+/* ── Message ── */
+#add-item-msg,
+#edit-item-msg {
+    font-size: 0.82rem;
+    min-height: 1rem;
+}
+
+/* ── Submit buttons ── */
+#btn-add-item,
+#btn-edit-item {
+    background: #3c2415;
+    color: #fff;
+    border: none;
+    padding: 0.65rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: none;
+    transform: none;
+    transition: background 0.2s;
+}
+
+#btn-add-item:hover:not(:disabled),
+#btn-edit-item:hover:not(:disabled) {
+    background: #2b1b03;
+    transform: none;
+}
+
+#btn-add-item:disabled,
+#btn-edit-item:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ── Image preview (edit modal) ── */
+#edit-item-img-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2rem;
+}
+
+/* ── FAB button ── */
+#add-item-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    width: auto;
+    background: #3c2415;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s, transform 0.15s;
+}
+
+#add-item-btn:hover {
+    background: #2b1b03;
+    transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DELETE ITEM MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#delete-item-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+}
+
+#delete-item-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#delete-item-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 400px;
+    max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#delete-item-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#delete-item-popup-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+#delete-item-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: auto;
+    box-shadow: none;
+}
+
+#delete-item-close:hover {
+    color: #111;
+    background: none;
+    transform: none;
+}
+
+#delete-item-body {
+    font-size: 0.9rem;
+    color: #444;
+    margin: 0;
+}
+
+#delete-item-msg {
+    font-size: 0.82rem;
+    min-height: 1rem;
+}
+
+#delete-item-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+#btn-delete-cancel {
+    padding: 0.6rem 1.2rem;
+    color:#111;
+    border: 1px solid #1c0000;
+    border-radius: 4px;
+    background: #f5f5f5;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#btn-delete-cancel:hover {
+    background: #340202;
+}
+
+#btn-delete-confirm {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background: #a52a2a;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: none;
+    transform: none;
+    width: auto;
+}
+
+#btn-delete-confirm:hover:not(:disabled) {
+    background: #160101;
+    transform: none;
+}
+
+#btn-delete-confirm:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

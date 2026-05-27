@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../stylings/main.css">
+    <link rel="stylesheet" href="../stylings/transaction.css">
+
+    <title>KB-net | Transactions</title>
+</head>
+<body>
+    <header></header>
+
+    <main class="tx-page">
+        <!-- PAGE HEADER -->
+        <div class="tx-page-header">
+            <h1>My Transactions</h1>
+        </div>
+    
+        <div class="tx-tabs">
+            <button class="tx-tab active" id="tab-borrow">
+                My Borrows
+            </button>
+            <button class="tx-tab" id="tab-lend">
+                My Lends
+            </button>
+        </div>
+
+        <!-- FILTER BAR FOR BORROWER VIEW -->
+        <div class="tx-filter-bar" id="tx-filter-bar">
+            <span class="tx-filter-label">Filter:</span>
+            
+            <label class="tx-filter-option">
+                <input type="radio" name="tx-filter" value="" checked>
+                All
+            </label>
+
+            <label class="tx-filter-option">
+                <input type="radio" name="tx-filter" value="active">
+                Active
+            </label>
+
+            <label class="tx-filter-option">
+                <input type="radio" name="tx-filter" value="overdue">
+                Overdue
+            </label>
+
+            <label class="tx-filter-option">
+                <input type="radio" name="tx-filter" value="returned">
+                Returned
+            </label>
+        </div>
+
+        <!-- TX CARD CONTAINER -->
+        <div class="tx-container" id="transaction-container"></div>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+</body>
+</html>

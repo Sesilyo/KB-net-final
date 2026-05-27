@@ -1,0 +1,145 @@
+// FILENAME: scripts/components/profileHandler.js
+
+export function initProfile() {
+
+    // ── 1. Load and populate fields ───────────────────────────────────────
+    async function loadProfile() {
+        try {
+            const res  = await fetch('../api/getProfile.php');
+            const data = await res.json();
+
+            if (!data.success) {
+                console.error('Failed to load profile:', data.error);
+                // If unauthorized, redirect to login
+                if (res.status === 401) window.location.href = '../pages/login_signup.html';
+                return;
+            }
+
+            const u = data.user;
+            document.getElementById('firstname-input').value    = u.first_name  ?? '';
+            document.getElementById('lastname-input').value     = u.last_name   ?? '';
+            document.getElementById('studentid-input').value    = u.student_id  ?? '';
+            document.getElementById('email-input').value        = u.email       ?? '';
+            document.getElementById('lenderid-display').value   = u.lender_id   ?? '';
+            document.getElementById('borrowerid-display').value = u.borrower_id ?? '';
+
+            if (u.profile_image) {
+                document.getElementById('profile-photo').src = u.profile_image;
+            }
+        } catch (err) {
+            console.error('Network error loading profile:', err);
+        }
+    }
+
+    // ── 2. EDIT button → enable that input ───────────────────────────────
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const field = btn.dataset.field;
+            const input = document.getElementById(`${field}-input`);
+
+            input.disabled = false;
+            input.focus();
+            btn.textContent = 'EDITING';
+
+            document.getElementById('save-changes-btn').style.display  = 'inline-block';
+            document.getElementById('cancel-changes-btn').style.display = 'inline-block';
+        });
+    });
+
+    // ── 3. Save → send each active field to editProfile.php ──────────────
+    document.getElementById('save-changes-btn').addEventListener('click', async () => {
+        const editableFields = ['firstname', 'lastname', 'studentid', 'email'];
+
+        for (const field of editableFields) {
+            const input = document.getElementById(`${field}-input`);
+            if (input.disabled) continue;           // skip fields not being edited
+
+            try {
+                const res  = await fetch('../api/editProfile.php', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({ field, value: input.value })
+                });
+                const data = await res.json();
+
+                if (!data.success) {
+                    alert(data.error ?? 'Something went wrong.');
+                    return;
+                }
+            } catch (err) {
+                alert('Network error. Please try again.');
+                return;
+            }
+        }
+
+        resetEditState();
+        loadProfile();  // refresh displayed values after save
+    });
+
+    // ── 4. Cancel → discard, reload original values ───────────────────────
+    document.getElementById('cancel-changes-btn').addEventListener('click', () => {
+        resetEditState();
+        loadProfile();
+    });
+
+    // ── 5. Logout ─────────────────────────────────────────────────────────
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+        try {
+            await fetch('../api/logout.php', { method: 'POST' });
+        } catch (_) {
+            // even if the request fails, redirect anyway
+        }
+        window.location.href = '../pages/login.html';
+    });
+
+    // ── 6. Photo upload ───────────────────────────────────────────────────
+    const uploadBtn  = document.getElementById('upload-photo-btn');
+    const photoInput = document.getElementById('photo-input');
+    const photoImg   = document.getElementById('profile-photo');
+
+    uploadBtn.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', async () => {
+        const file = photoInput.files[0];
+        if (!file) return;
+
+        // Preview immediately
+        const reader = new FileReader();
+        reader.onload = e => photoImg.src = e.target.result;
+        reader.readAsDataURL(file);
+
+        // Upload to server
+        const formData = new FormData();
+        formData.append('profile_image', file);
+
+        try {
+            const res  = await fetch('../api/uploadPhoto.php', {
+                method: 'POST',
+                body:   formData
+            });
+            const data = await res.json();
+
+            if (!data.success) {
+                alert(data.error ?? 'Photo upload failed.');
+                loadProfile();  // revert preview to server image
+            }
+        } catch (err) {
+            alert('Network error uploading photo.');
+            loadProfile();
+        }
+
+        // Reset input so the same file can be re-selected if needed
+        photoInput.value = '';
+    });
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+    function resetEditState() {
+        document.querySelectorAll('.editable-input').forEach(i => i.disabled = true);
+        document.querySelectorAll('.edit-btn').forEach(b => b.textContent = 'EDIT');
+        document.getElementById('save-changes-btn').style.display  = 'none';
+        document.getElementById('cancel-changes-btn').style.display = 'none';
+    }
+
+    // ── Run on init ───────────────────────────────────────────────────────
+    loadProfile();
+}

@@ -1,0 +1,96 @@
+<!-- FILENAME: pages/profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../stylings/main.css">
+        <link rel="stylesheet" href="../stylings/profile.css">
+
+        <title>KB-Net | Profile</title>
+    </head>
+    <body>
+        <header id="profile-header">
+        </header>
+
+        <!-- Main profile content -->
+        <main id="profile-main">
+
+            <!-- Profile Photo -->
+            <div class="profile-photo-wrapper">
+                <div class="profile-photo-container">
+                    <img id="profile-photo" src="https://via.placeholder.com/150" alt="Profile Photo" class="profile-photo">
+                    <button id="upload-photo-btn" class="upload-photo-btn" title="Change photo"></button>
+                    <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Fields Grid -->
+            <div class="profile-fields-grid">
+
+                <!-- Row 1 -->
+                <div class="field-group">
+                    <label for="firstname-input">FirstName</label>
+                    <div class="editable-field">
+                        <input type="text" id="firstname-input" class="editable-input" value="" disabled>
+                        <button class="edit-btn" data-field="firstname">EDIT</button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="lastname-input">LastName</label>
+                    <div class="editable-field">
+                        <input type="text" id="lastname-input" class="editable-input" value="" disabled>
+                        <button class="edit-btn" data-field="lastname">EDIT</button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="studentid-input">Student ID</label>
+                    <div class="editable-field">
+                        <input type="text" id="studentid-input" class="editable-input" value="" disabled>
+                        <button class="edit-btn" data-field="studentid">EDIT</button>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="field-group">
+                    <label for="email-input">Email Address</label>
+                    <div class="editable-field">
+                        <input type="email" id="email-input" class="editable-input" value="" disabled>
+                        <button class="edit-btn" data-field="email">EDIT</button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="lenderid-display">Lender ID</label>
+                    <div class="editable-field readonly-field">
+                        <input type="text" id="lenderid-display" class="editable-input" value="" disabled readonly>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="borrowerid-display">Borrower ID</label>
+                    <div class="editable-field readonly-field">
+                        <input type="text" id="borrowerid-display" class="editable-input" value="" disabled readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Save / Cancel (hidden until editing) -->
+            <div class="profile-action-row">
+                <button id="save-changes-btn" class="save-btn" style="display: none;">Save Changes</button>
+                <button id="cancel-changes-btn" class="cancel-btn" style="display: none;">Cancel</button>
+                <button id="logout-btn" class="logout-btn">LOG OUT</button>
+            </div>
+
+        </main>
+
+        <footer></footer>
+
+        <script src="../scripts/main.js" type="module"></script>
+    </body>
+</html>
