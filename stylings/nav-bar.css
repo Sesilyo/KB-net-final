@@ -36,3 +36,16 @@ header a {
 header a:hover {
     border-bottom: 2px solid var(--COLOR-TEXT-NAVBAR);
 }
+
+#navbar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+#search-bar {
+    padding: 16px 20px 16px 24px;
+    border: none;
+    border-radius: 28px;
+    text-align: left;
+}

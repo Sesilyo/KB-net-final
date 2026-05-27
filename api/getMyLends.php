@@ -1,19 +1,12 @@
 <?php
 // FILENAME: api/getMyLends.php
-// Returns all transactions where the logged-in user is the LENDER.
-// Reads lender_id from session (set at login), no query param needed.
-//
-// No is_returned filter — lender tab shows all statuses per wireframe.
-//
-// Response JSON shape:
-// { "success": true, "data": [ { ...transaction fields... }, ... ] }
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
 header('Content-Type: application/json');
-require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
+require_once __DIR__ . '/../DBConnector.php';   
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 //if (!isset($_SESSION['lender_id'])) {
@@ -25,11 +18,6 @@ require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
 $lenderId = 'L-0004'; //$_SESSION['lender_id'];
 
 // ── Query ─────────────────────────────────────────────────────────────────────
-//
-// Derived status logic:
-//   is_returned = 1                        → 'Returned'
-//   is_returned = 0 AND NOW() > end_date   → 'Overdue'
-//   is_returned = 0 AND NOW() <= end_date  → 'Active'
 
 $sql = "
     SELECT

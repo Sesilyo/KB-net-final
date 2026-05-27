@@ -1,9 +1,4 @@
 <?php
-    // FILENAME: getItems.php
-    // used in browse.html/filtering logic
-    // if need to collect singular item data, refer to getItem.php, singular
-    // this one is getItems.php, plural
-
     require_once __DIR__ . '/../DBConnector.php';
 
     $conditions = [];
@@ -34,6 +29,14 @@
             $params[] = $status;
             $types .= "s";
         }
+    }
+
+
+    if ( !empty($_GET['search']) ) {
+        $search = '%' . $_GET['search'] . '%';
+        $conditions[] = "i.item_name LIKE ?";
+        $params[] = $search;
+        $types .= "s";
     }
 
 

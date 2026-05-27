@@ -2,7 +2,7 @@
 
 export function initProfile() {
 
-    // ── 1. Load and populate fields ───────────────────────────────────────
+    //Load and populate fields 
     async function loadProfile() {
         try {
             const res  = await fetch('../api/getProfile.php');
@@ -27,7 +27,7 @@ export function initProfile() {
         }
     }
 
-    // ── 2. EDIT button → enable that input ───────────────────────────────
+    // EDIT button 
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const field = btn.dataset.field;
@@ -42,7 +42,7 @@ export function initProfile() {
         });
     });
 
-    // ── 3. Save → send each active field to editProfile.php ──────────────
+    // Save 
     document.getElementById('save-changes-btn').addEventListener('click', async () => {
         const editableFields = ['firstname', 'lastname', 'studentid', 'email'];
 
@@ -72,13 +72,11 @@ export function initProfile() {
         loadProfile();
     });
 
-    // ── 4. Cancel → discard, reload original values ───────────────────────
     document.getElementById('cancel-changes-btn').addEventListener('click', () => {
         resetEditState();
         loadProfile();
     });
 
-    // ── 5. Logout ─────────────────────────────────────────────────────────
     document.getElementById('logout-btn').addEventListener('click', async () => {
         try {
             await fetch('../api/logout.php', { method: 'POST' });

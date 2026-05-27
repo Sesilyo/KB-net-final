@@ -5,10 +5,14 @@ export async function loadNavbar() {
         <nav id="main-nav-bar">
             <h1>KB-Net</h1>
             <ul>
-                <li><a href="../pages/browse.html">Browse</a></li>
-                <li><a href="../pages/transaction.html">Transactions</a></li>
-                <li><a href="../pages/my_items.html">My Items</a></li>
-                <li><a href="../pages/profile.html">Profile</a></li>
+                <div id="navbar-links">
+                    <li><a href="../pages/browse.html">Browse</a></li>
+                    <li><a href="../pages/transaction.html">Transactions</a></li>
+                    <li><a href="../pages/my_items.html">My Items</a></li>
+                    <li><a href="../pages/profile.html">Profile</a></li>
+                </div>
+
+                <input type="text" id="search-bar" class="hidden" placeholder="Search items...">
             </ul>
         </nav>
     `;

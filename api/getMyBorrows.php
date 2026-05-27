@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 session_start();
 header('Content-Type: application/json');
-require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
+require_once __DIR__ . '/../DBConnector.php'; 
 
 //if (!isset($_SESSION['borrower_id'])) {
 //    http_response_code(401);
@@ -16,24 +16,14 @@ require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
 
 $borrowerId = 'B-0004'; //$_SESSION['borrower_id'];
 
-// ── Optional filter ───────────────────────────────────────────────────────────
 // Supports filtering by derived status: 'active', 'overdue', 'returned', or '' for all
-// Also still accepts legacy is_returned=0/1 for backwards compatibility
 $statusFilter = strtolower(trim($_GET['status'] ?? ''));
 
-// Legacy support: is_returned=1 → 'returned', is_returned=0 → show active+overdue
 if ($statusFilter === '' && isset($_GET['is_returned']) && $_GET['is_returned'] !== '') {
     $statusFilter = $_GET['is_returned'] === '1' ? 'returned' : 'not_returned';
 }
 
 // ── Build query ───────────────────────────────────────────────────────────────
-//
-// Derived status logic (computed inside a subquery so we can WHERE on it):
-//   is_returned = 1                        → 'Returned'
-//   is_returned = 0 AND NOW() > end_date   → 'Overdue'
-//   is_returned = 0 AND NOW() <= end_date  → 'Active'
-//
-// We wrap in a subquery so the HAVING/WHERE can filter on the computed status column.
 
 $sql = "
     SELECT *
@@ -93,7 +83,6 @@ if ($statusFilter === 'returned') {
 } elseif ($statusFilter === 'active') {
     $sql .= " WHERE tx.status = 'Active'";
 } elseif ($statusFilter === 'not_returned') {
-    // Legacy is_returned=0: show both Active and Overdue
     $sql .= " WHERE tx.status IN ('Active', 'Overdue')";
 }
 
