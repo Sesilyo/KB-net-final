@@ -28,10 +28,11 @@ function createItemCard(item) {
     `;
 }
 
-export async function injectItemGrid(containerId, categories = [], statuses = []) {
+export async function injectItemGrid(containerId, categories = [], statuses = [], search='') {
     const params = new URLSearchParams();
     if (categories.length) params.append('categories', categories.join(','));
     if (statuses.length) params.append('statuses', statuses.join(','));
+    if (search) params.append('search', search);
 
     const res = await fetch(`../api/getItems.php?${params}`);
     const items = await res.json();

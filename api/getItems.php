@@ -37,6 +37,14 @@
     }
 
 
+    if ( !empty($_GET['search']) ) {
+        $search = '%' . $_GET['search'] . '%';
+        $conditions[] = "i.item_name LIKE ?";
+        $params[] = $search;
+        $types .= "s";
+    }
+
+
     $query = "  SELECT  i.item_id, i.item_name, i.item_status, i.price_pr_hr, i.image_path,
                         c.category_name, u.first_name, u.last_name
                 FROM item i

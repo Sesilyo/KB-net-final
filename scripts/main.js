@@ -23,17 +23,28 @@ function getFilters() {
     return { categories, statuses };
 }
 
+
 // ── Browse page ───────────────────────────────────────────────────────────────
 if (PATH.includes('browse.html')) {
+    document.querySelector('#search-bar').classList.remove('hidden');
     injectItemGrid('#item-grid');
     injectFilters('#filter-container');
 
+    // event listener for filters
     document.addEventListener('change', (e) => {
         if (!e.target.matches('.filter-category, .filter-availability')) return;
-        const { categories, statuses, sort } = getFilters();
-        injectItemGrid('#item-grid', categories, statuses, sort);
+        const { categories, statuses } = getFilters();
+        const search = document.querySelector('#search-bar').value;
+        injectItemGrid('#item-grid', categories, statuses, search);
+    });
+
+    // event listener for search bar
+    document.querySelector('#search-bar').addEventListener('input', (e) => {
+        const { categories, statuses } = getFilters();
+        injectItemGrid('#item-grid', categories, statuses, e.target.value);
     });
 }
+
 
 // ── Transactions page ─────────────────────────────────────────────────────────
 if (PATH.includes('transaction.html')) {
