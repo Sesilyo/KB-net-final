@@ -11,13 +11,13 @@ require_once __DIR__ . '/../DBConnector.php';
 header('Content-Type: application/json');
 
 // guard block to check if user is logged in
-//if (!isset($_SESSION['borrower_id'])) {
-//    http_response_code(401);
-//    echo json_encode(['success' => 'false', 'message' => 'Unauthorized']);
-//    exit;
-//}
+if (!isset($_SESSION['borrower_id'])) {
+    http_response_code(401);
+    echo json_encode(['success' => 'false', 'message' => 'Unauthorized']);
+    exit;
+}
 
-$borrower_id = 'B-0004'; //$_SESSION['borrower_id'];
+$borrower_id = $_SESSION['borrower_id'];
 
 // reading request body
 $data       = json_decode(file_get_contents('php://input'), true);

@@ -23,7 +23,7 @@ function renderModal(item) {
 
     <div class="modal-image-wrap">
         <img src="../${item.image_path}" alt="${item.item_name}"
-             onerror="this.style.display='none'">
+            onerror="this.style.display='none'">
     </div>
 
     <div class="modal-info">
