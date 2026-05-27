@@ -2,7 +2,7 @@
 
 export function initProfile() {
 
-    // ── 1. Load and populate fields ───────────────────────────────────────
+    //Load and populate fields 
     async function loadProfile() {
         try {
             const res  = await fetch('../api/getProfile.php');
@@ -10,7 +10,6 @@ export function initProfile() {
 
             if (!data.success) {
                 console.error('Failed to load profile:', data.error);
-                // If unauthorized, redirect to login
                 if (res.status === 401) window.location.href = '../pages/login_signup.html';
                 return;
             }
@@ -23,15 +22,12 @@ export function initProfile() {
             document.getElementById('lenderid-display').value   = u.lender_id   ?? '';
             document.getElementById('borrowerid-display').value = u.borrower_id ?? '';
 
-            if (u.profile_image) {
-                document.getElementById('profile-photo').src = u.profile_image;
-            }
         } catch (err) {
             console.error('Network error loading profile:', err);
         }
     }
 
-    // ── 2. EDIT button → enable that input ───────────────────────────────
+    // EDIT button 
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const field = btn.dataset.field;
@@ -46,13 +42,13 @@ export function initProfile() {
         });
     });
 
-    // ── 3. Save → send each active field to editProfile.php ──────────────
+    // Save 
     document.getElementById('save-changes-btn').addEventListener('click', async () => {
         const editableFields = ['firstname', 'lastname', 'studentid', 'email'];
 
         for (const field of editableFields) {
             const input = document.getElementById(`${field}-input`);
-            if (input.disabled) continue;           // skip fields not being edited
+            if (input.disabled) continue;
 
             try {
                 const res  = await fetch('../api/editProfile.php', {
@@ -73,63 +69,19 @@ export function initProfile() {
         }
 
         resetEditState();
-        loadProfile();  // refresh displayed values after save
+        loadProfile();
     });
 
-    // ── 4. Cancel → discard, reload original values ───────────────────────
     document.getElementById('cancel-changes-btn').addEventListener('click', () => {
         resetEditState();
         loadProfile();
     });
 
-    // ── 5. Logout ─────────────────────────────────────────────────────────
     document.getElementById('logout-btn').addEventListener('click', async () => {
         try {
             await fetch('../api/logout.php', { method: 'POST' });
-        } catch (_) {
-            // even if the request fails, redirect anyway
-        }
-        window.location.href = '../pages/login.html';
-    });
-
-    // ── 6. Photo upload ───────────────────────────────────────────────────
-    const uploadBtn  = document.getElementById('upload-photo-btn');
-    const photoInput = document.getElementById('photo-input');
-    const photoImg   = document.getElementById('profile-photo');
-
-    uploadBtn.addEventListener('click', () => photoInput.click());
-
-    photoInput.addEventListener('change', async () => {
-        const file = photoInput.files[0];
-        if (!file) return;
-
-        // Preview immediately
-        const reader = new FileReader();
-        reader.onload = e => photoImg.src = e.target.result;
-        reader.readAsDataURL(file);
-
-        // Upload to server
-        const formData = new FormData();
-        formData.append('profile_image', file);
-
-        try {
-            const res  = await fetch('../api/uploadPhoto.php', {
-                method: 'POST',
-                body:   formData
-            });
-            const data = await res.json();
-
-            if (!data.success) {
-                alert(data.error ?? 'Photo upload failed.');
-                loadProfile();  // revert preview to server image
-            }
-        } catch (err) {
-            alert('Network error uploading photo.');
-            loadProfile();
-        }
-
-        // Reset input so the same file can be re-selected if needed
-        photoInput.value = '';
+        } catch (_) {}
+        window.location.href = '../pages/login_signup.html';
     });
 
     // ── Helpers ───────────────────────────────────────────────────────────

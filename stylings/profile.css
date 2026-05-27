@@ -40,22 +40,22 @@ body {
 .upload-photo-btn {
     position: absolute;
     bottom: 4px;
-    right: 4px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    background: #3b1f0e;
+    margin-left: 120px;
+    height: 10;
+    border-radius: 0%;
+    background: #1e1208;
     color: #fff;
-    font-size: 13px;
+    font-size: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.upload-photo-btn:hover {
-    background: #5c2d0e;
+    border: none;
+    padding: 0 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    min-height: 10px;
 }
 
 /* ── Fields grid ── */

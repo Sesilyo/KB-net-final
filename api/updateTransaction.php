@@ -15,7 +15,7 @@
     $returned_date  = $data['returned_date']  ?? null;
     $notes          = $data['notes']          ?? null;
     $penalty_fee    = $data['penalty_fee']    ?? null;
-    $is_returned    = $data['is_returned']    ?? null;   // FIX 1: was never extracted from $data
+    $is_returned    = $data['is_returned']    ?? null;  
 
     // guard block for missing transaction id
     if (!$transaction_id) {
@@ -29,7 +29,6 @@
         $returned_date = date('Y-m-d H:i:s');
     }
 
-    // FIX 2: was bare prepare() — must be $conn->prepare()
     $statement = $conn->prepare(
         "UPDATE transaction
             SET start_date    = ?,
@@ -47,9 +46,7 @@
         exit;
     }
 
-    // FIX 3: original type string 'ssissds' was missing is_returned entirely
-    // Correct: s=start_date, s=end_date, s=returned_date, i=is_returned,
-    //          s=notes, d=penalty_fee, s=transaction_id  →  'sssisds'
+
     $statement->bind_param('sssisds',
         $start_date,
         $end_date,
