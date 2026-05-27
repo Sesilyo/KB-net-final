@@ -4,16 +4,17 @@
 ini_set('display_errors', 0);
 error_reporting(0);
 
+session_start();
 header('Content-Type: application/json');
-require_once __DIR__ . '/getSession.php';
 require_once __DIR__ . '/../DBConnector.php';
 
-$session = getSession();
-if (!$session) {
+if (!isset($_SESSION['borrower_id'])) {
     http_response_code(401);
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;
 }
+
+$borrower_id = $_SESSION['borrower_id'];
 
 $body = json_decode(file_get_contents('php://input'), true);
 
@@ -23,9 +24,8 @@ if (!$body || !isset($body['field'], $body['value'])) {
     exit;
 }
 
-$borrower_id = $session['borrower_id'];
-$field       = $body['field'];
-$value       = trim($body['value']);
+$field = $body['field'];
+$value = trim($body['value']);
 
 $allowed = [
     'firstname' => 'first_name',
@@ -54,7 +54,6 @@ if ($field === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
 
 $column = $allowed[$field];
 
-// Get user_id
 $check = $conn->prepare('SELECT user_id FROM user WHERE borrower_id = ? LIMIT 1');
 $check->bind_param('s', $borrower_id);
 $check->execute();
@@ -69,7 +68,6 @@ if (!$row) {
 
 $user_id = $row['user_id'];
 
-// Check for duplicates
 if ($field === 'email' || $field === 'studentid') {
     $dup = $conn->prepare("SELECT user_id FROM user WHERE $column = ? AND user_id != ?");
     $dup->bind_param('si', $value, $user_id);
@@ -91,7 +89,6 @@ if (!$stmt->execute()) {
     exit;
 }
 
-// Sync session
 $_SESSION[$column] = $value;
 
 $stmt->close();

@@ -35,14 +35,12 @@
     padding: 0.45rem 1.4rem;
     font-size: 0.9rem;
     font-weight: 500;
-    border: none;
     background: transparent;
     cursor: pointer;
     color: var(--COLOR-TEXT);
     opacity: 0.5;
-    border-bottom: 3px solid transparent;
     margin-bottom: -2px;
-    transition: opacity 0.2s, border-color 0.2s;
+    transition: opacity 0.2s;
 }
 
 .tx-tab:hover {
@@ -53,7 +51,8 @@
 .tx-tab.active {
     opacity: 1;
     font-weight: 700;
-    border-bottom-color: #3c2415;
+    background-color: #3c2415;
+    color:#fff1f1;
 }
 
 /* ── Filter Bar ── */
@@ -131,7 +130,7 @@
     height: 130px;
     min-width: 130px;       /* prevents flex from squishing it */
     overflow: hidden;
-    background: #e8d5b7;
+    background: #ffffff;
     border-radius: 4px;
     flex-shrink: 0;
     box-sizing: border-box;

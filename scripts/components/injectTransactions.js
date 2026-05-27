@@ -44,6 +44,10 @@ function lenderEditForm(tx) {
         <input class="tx-end" type="datetime-local"
             value="${toDateTimeLocal(tx.end_date)}">
     </label>
+    <label class="tx-info-label">Returned Date
+        <input class="tx-returned-date" type="datetime-local"
+            value="${toDateTimeLocal(tx.returned_date)}">
+    </label>
     <label class="tx-info-label tx-returned-label">
         <input class="tx-returned" type="checkbox"
             ${tx.is_returned ? 'checked' : ''}>
@@ -90,6 +94,7 @@ async function saveTransaction(card) {
         transaction_id: card.dataset.id,
         start_date:     card.querySelector('.tx-start').value.replace('T', ' '),
         end_date:       card.querySelector('.tx-end').value.replace('T', ' '),
+        returned_date:  card.querySelector('.tx-returned-date').value.replace('T', ' '),
         is_returned:    card.querySelector('.tx-returned').checked ? 1 : 0,
         notes:          card.querySelector('.tx-notes').value,
         penalty_fee:    card.querySelector('.tx-penalty').value,

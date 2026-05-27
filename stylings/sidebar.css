@@ -5,7 +5,7 @@
     width: 180px;
     flex-shrink: 0;
     align-self: flex-start;
-    background: wheat;
+    background: transparent;
     border-radius: 0;
     padding: 10px;
     position: sticky;
