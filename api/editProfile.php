@@ -54,7 +54,7 @@ if ($field === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
 
 $column = $allowed[$field];
 
-$check = $conn->prepare('SELECT user_id FROM user WHERE borrower_id = ? LIMIT 1');
+$check = $conn->prepare('SELECT student_id FROM user WHERE borrower_id = ? LIMIT 1');
 $check->bind_param('s', $borrower_id);
 $check->execute();
 $row = $check->get_result()->fetch_assoc();
@@ -66,11 +66,11 @@ if (!$row) {
     exit;
 }
 
-$user_id = $row['user_id'];
+$student_id = $row['student_id'];
 
 if ($field === 'email' || $field === 'studentid') {
-    $dup = $conn->prepare("SELECT user_id FROM user WHERE $column = ? AND user_id != ?");
-    $dup->bind_param('si', $value, $user_id);
+    $dup = $conn->prepare("SELECT student_id FROM user WHERE $column = ? AND student_id != ?");
+    $dup->bind_param('ss', $value, $student_id);
     $dup->execute();
     if ($dup->get_result()->num_rows > 0) {
         http_response_code(409);
@@ -80,8 +80,8 @@ if ($field === 'email' || $field === 'studentid') {
     $dup->close();
 }
 
-$stmt = $conn->prepare("UPDATE user SET $column = ? WHERE user_id = ?");
-$stmt->bind_param('si', $value, $user_id);
+$stmt = $conn->prepare("UPDATE user SET $column = ? WHERE student_id = ?");
+$stmt->bind_param('ss', $value, $student_id);
 
 if (!$stmt->execute()) {
     http_response_code(500);
