@@ -1,0 +1,224 @@
+/* FILENAME: modal.css */
+
+@import "./variables.css";
+
+/* Overlay — full screen backdrop */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(60, 36, 21, 0.55);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+/* Modal card */
+.modal-card {
+    background: var(--COLOR-BACKGROUND);
+    border: 2px solid var(--COLOR-TEXT);
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    position: relative;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.25rem;
+}
+
+/* Close button */
+.modal-close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--COLOR-TEXT);
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    opacity: 1;
+}
+
+/* Image */
+.modal-image-wrap {
+    width: 160px;
+    height: 160px;
+    border: 1px solid var(--COLOR-TEXT);
+    overflow: hidden;
+    background: wheat;
+}
+
+.modal-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info section */
+.modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.modal-category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.5;
+    margin: 0;
+}
+
+.modal-info h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--COLOR-TEXT);
+}
+
+.modal-description {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin: 0;
+    color: var(--COLOR-TEXT);
+}
+
+.modal-lender {
+    font-size: 0.82rem;
+    opacity: 0.55;
+    margin: 0;
+    color: var(--COLOR-TEXT);
+}
+
+.modal-price {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--COLOR-ACCENT);
+    margin: 0.25rem 0;
+}
+
+/* Form */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.modal-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--COLOR-TEXT);
+}
+
+.modal-form input[type="datetime-local"] {
+    font-family: inherit;
+    font-size: 0.88rem;
+    padding: 0.4rem 0.6rem;
+    border: 2px solid var(--COLOR-TEXT);
+    background: var(--COLOR-BACKGROUND);
+    color: var(--COLOR-TEXT);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.modal-form input:focus {
+    outline: none;
+    border-color: var(--COLOR-ACCENT);
+}
+
+.modal-total {
+    font-size: 0.9rem;
+    color: var(--COLOR-TEXT);
+    margin: 0.25rem 0 0;
+}
+
+/* Confirm button */
+.modal-confirm-btn {
+    padding: 0.5rem 1.25rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: var(--COLOR-BACKGROUND-NAVBAR);
+    color: var(--COLOR-TEXT-NAVBAR);
+    border: 2px solid var(--COLOR-TEXT);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    align-self: flex-start;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.modal-confirm-btn:hover {
+    background: var(--COLOR-ACCENT);
+    color: #fff;
+}
+
+.modal-confirm-btn:active {
+    transform: scale(0.97);
+}
+
+.modal-confirm-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Disabled borrow button on item cards */
+.borrow-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #ccc;
+    border-color: #aaa;
+    color: #666;
+}
+
+/* Error, loading states */
+.modal-error {
+    font-size: 0.85rem;
+    color: #b91c1c;
+    margin: 0;
+}
+
+.modal-error.hidden {
+    display: none;
+}
+
+.modal-loading {
+    text-align: center;
+    padding: 2rem;
+    opacity: 0.5;
+    grid-column: 1 / -1;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+    .modal-card {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-image-wrap {
+        width: 100%;
+        height: 180px;
+    }
+}
