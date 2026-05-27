@@ -30,6 +30,8 @@ main {
 
 main h1, main h3, main h4, main p, main a {
     color: var(--COLOR-TEXT);
+    font-family: 'DM Sans', sans-serif;
+
 }
 
 #welcome-texts {
