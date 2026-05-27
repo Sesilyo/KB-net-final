@@ -16,13 +16,13 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
-if (!isset($_SESSION['lender_id'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit;
-}
+//if (!isset($_SESSION['lender_id'])) {
+//    http_response_code(401);
+//    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+//    exit;
+//}
 
-$lenderId = $_SESSION['lender_id'];
+$lenderId = 'L-0004'; //$_SESSION['lender_id'];
 
 // ── Query ─────────────────────────────────────────────────────────────────────
 //

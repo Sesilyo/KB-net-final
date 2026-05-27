@@ -3,17 +3,21 @@
 // creates a new transaction upon a new user borrow
 // called by injectItemPopUp.js when user clicks "Confirm Borrow"
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once __DIR__ . '/../DBConnector.php';
 header('Content-Type: application/json');
 
 // guard block to check if user is logged in
-if (!isset($_SESSION['borrower_id'])) {
-    echo json_encode(['error' => 'Not logged in']);
-    exit;
-}
+//if (!isset($_SESSION['borrower_id'])) {
+//    http_response_code(401);
+//    echo json_encode(['success' => 'false', 'message' => 'Unauthorized']);
+//    exit;
+//}
 
-$borrower_id = $_SESSION['borrower_id'];
+$borrower_id = 'B-0004'; //$_SESSION['borrower_id'];
 
 // reading request body
 $data       = json_decode(file_get_contents('php://input'), true);
@@ -34,14 +38,17 @@ $check = $conn->prepare(
 $check->bind_param('i', $item_id);
 $check->execute();
 $item = $check->get_result()->fetch_assoc();
+$check->close();
 
 if (!$item) {
-    echo json_encode(['error' => 'Item not found']);
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Item not found']);
     exit;
 }
 
 if ($item['item_status'] !== 'available') {
-    echo json_encode(['error' => 'Item is no longer available']);
+    http_response_code(409);    // 409 Conflict — resource state prevents the request
+    echo json_encode(['success' => false, 'message' => 'Item is no longer available']);
     exit;
 }
 
@@ -65,18 +72,22 @@ $statement->execute();
 
 // catches error in transaction creation
 if ($statement->affected_rows === 0) {
-    echo json_encode(['error' => 'Failed to create transaction']);
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Failed to create transaction']);
     exit;
 }
 
+$statement->close();
+
 // mark item as borrowed
 $update = $conn->prepare(
-    "UPDATE SET item_status = 'borrowed' WHERE item_id = ?"
+    "UPDATE item SET item_status = 'borrowed' WHERE item_id = ?"
 );
 
 $update->bind_param('i', $item_id);
 $update->execute();
+$update->close();
 
-echo json_encode(['success' => true]);
+echo json_encode(['success' => true, 'message' => 'Transaction created successfully']);
 
 ?>

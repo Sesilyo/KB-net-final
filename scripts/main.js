@@ -1,16 +1,16 @@
 // FILENAME: scripts/main.js
 
 // IMPORT FOR COMPONENT LOGICS
-import { loadNavbar }         from "./components/injectNavBar.js";
-import { injectItemGrid }     from "./components/injectItemGrid.js";
-import { injectFilters }      from "./components/injectFilters.js";
-import { injectMyItems }      from "./components/injectMyItems.js";
-import { initAddItem }        from "./components/addItem.js";
-import { initEditItem }       from "./components/edittem.js";
-import { initDeleteItem }     from "./components/deleteItem.js";
-import { initProfile }        from "./components/profileHandler.js";
-import { injectTransactions } from './components/injectTransactions.js';
-
+import { loadNavbar }           from "./components/injectNavBar.js";
+import { injectItemGrid }       from "./components/injectItemGrid.js";
+import { injectFilters }        from "./components/injectFilters.js";
+import { injectMyItems }        from "./components/injectMyItems.js";
+import { initAddItem }          from "./components/addItem.js";
+import { initEditItem }         from "./components/edittem.js";
+import { initDeleteItem }       from "./components/deleteItem.js";
+import { initProfile }          from "./components/profileHandler.js";
+import { injectTransactions }   from './components/injectTransactions.js';
+import { openItemModal }        from './components/injectItemModal.js';  
 const PATH = window.location.pathname;
 
 // globally load navbar for all pages
@@ -25,8 +25,19 @@ function getFilters() {
 
 // ── Browse page ───────────────────────────────────────────────────────────────
 if (PATH.includes('browse.html')) {
+    //const session = await fetch('../api/getSession.php').then(r => r.json());
+    //const currentLenderId = session.success ? session.lender_id : null;
+
+    const currentLenderId = 'L-0004';
+
     injectItemGrid('#item-grid');
     injectFilters('#filter-container');
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.matches('.borrow-btn')) return;
+        const itemId = e.target.dataset.id;
+        if (itemId) openItemModal(itemId);
+    });
 
     document.addEventListener('change', (e) => {
         if (!e.target.matches('.filter-category, .filter-availability')) return;

@@ -8,13 +8,13 @@ session_start();
 header('Content-Type: application/json');
 require_once __DIR__ . '/../DBConnector.php';   // provides $conn (mysqli)
 
-if (!isset($_SESSION['borrower_id'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit;
-}
+//if (!isset($_SESSION['borrower_id'])) {
+//    http_response_code(401);
+//    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+//    exit;
+//}
 
-$borrowerId = $_SESSION['borrower_id'];
+$borrowerId = 'B-0004'; //$_SESSION['borrower_id'];
 
 // ── Optional filter ───────────────────────────────────────────────────────────
 // Supports filtering by derived status: 'active', 'overdue', 'returned', or '' for all
