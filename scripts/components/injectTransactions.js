@@ -1,4 +1,4 @@
-// FILENAME: injectTransactions.js
+// FILENAME: scripts/components/injectTransactions.js
 // Fetches and renders transaction cards for both borrower and lender views.
 
 function formatDateTime(dt) {
@@ -25,10 +25,11 @@ function borrowerView(tx) {
 
     return `
     <p class="tx-counterpart">Lender: ${tx.lender_name ?? '-'}</p>
-    <p><strong>Start:</strong>    ${formatDateTime(tx.start_date)}</p>
-    <p><strong>End:</strong>      ${formatDateTime(tx.end_date)}</p>
-    <p><strong>Returned:</strong> ${formatDateTime(tx.returned_date)}</p>
-    <p><strong>Notes:</strong>    ${tx.notes ?? '-'}</p>
+    <p><strong>Start:</strong>       ${formatDateTime(tx.start_date)}</p>
+    <p><strong>End:</strong>         ${formatDateTime(tx.end_date)}</p>
+    <p><strong>Returned:</strong>    ${formatDateTime(tx.returned_date)}</p>
+    <p><strong>Total Cost:</strong>  ₱${Number(tx.total_cost).toFixed(2)}</p>
+    <p><strong>Notes:</strong>       ${tx.notes ?? '-'}</p>
     ${overdueRow}
     <span class="tx-status-label ${statusClass}">${tx.status ?? '-'}</span>`;
 }
@@ -36,6 +37,7 @@ function borrowerView(tx) {
 function lenderEditForm(tx) {
     return `
     <p class="tx-counterpart">Borrower: ${tx.borrower_name ?? '-'}</p>
+    <p><strong>Total Cost:</strong>  ₱${Number(tx.total_cost).toFixed(2)}</p>
     <label class="tx-info-label">Start Date
         <input class="tx-start" type="datetime-local"
             value="${toDateTimeLocal(tx.start_date)}">
