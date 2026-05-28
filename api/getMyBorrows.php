@@ -16,12 +16,8 @@ if (!isset($_SESSION['borrower_id'])) {
 
 $borrowerId = $_SESSION['borrower_id'];
 
-// Supports filtering by derived status: 'active', 'overdue', 'returned', or '' for all
+// Supports filtering by derived status: 'active', 'returned', or '' for all
 $statusFilter = strtolower(trim($_GET['status'] ?? ''));
-
-if ($statusFilter === '' && isset($_GET['is_returned']) && $_GET['is_returned'] !== '') {
-    $statusFilter = $_GET['is_returned'] === '1' ? 'returned' : 'not_returned';
-}
 
 // ── Build query ───────────────────────────────────────────────────────────────
 
@@ -35,41 +31,31 @@ $sql = "
             t.returned_date,
             t.notes,
             t.is_returned,
-            t.penalty_fee,
 
             CASE
-                WHEN t.is_returned = 1     THEN 'Returned'
-                WHEN NOW() > t.end_date    THEN 'Overdue'
-                ELSE                            'Active'
+                WHEN t.is_returned = 1 THEN 'Returned'
+                ELSE                        'Active'
             END AS status,
-
-            CASE
-                WHEN t.is_returned = 0 AND NOW() > t.end_date
-                THEN ROUND(
-                    TIMESTAMPDIFF(HOUR, t.end_date, NOW()) * i.price_pr_hr, 2
-                )
-                ELSE 0
-            END AS overdue_penalty,
 
             ROUND(
                 TIMESTAMPDIFF(HOUR, t.start_date, t.end_date) * i.price_pr_hr, 2
             ) AS total_cost,
 
             i.item_id,
-            i.item_name,
+            COALESCE(i.item_name,  '[Deleted Item]') AS item_name,
             i.price_pr_hr,
             i.image_path,
             i.item_status,
 
-            c.category_name,
+            COALESCE(c.category_name, '[Deleted]') AS category_name,
 
             CONCAT(u.first_name, ' ', u.last_name) AS lender_name,
             t.lender_id
 
         FROM   transaction t
-        JOIN   item        i ON i.item_id     = t.item_id
-        JOIN   category    c ON c.category_id = i.category_id
-        JOIN   user        u ON u.lender_id   = t.lender_id
+        LEFT JOIN   item        i ON i.item_id     = t.item_id
+        LEFT JOIN   category    c ON c.category_id = i.category_id
+        JOIN        user        u ON u.lender_id   = t.lender_id
 
         WHERE  t.borrower_id = ?
     ) AS tx
@@ -78,12 +64,8 @@ $sql = "
 // ── Append status filter on the derived column ────────────────────────────────
 if ($statusFilter === 'returned') {
     $sql .= " WHERE tx.status = 'Returned'";
-} elseif ($statusFilter === 'overdue') {
-    $sql .= " WHERE tx.status = 'Overdue'";
 } elseif ($statusFilter === 'active') {
     $sql .= " WHERE tx.status = 'Active'";
-} elseif ($statusFilter === 'not_returned') {
-    $sql .= " WHERE tx.status IN ('Active', 'Overdue')";
 }
 
 $sql .= " ORDER BY tx.start_date DESC";
@@ -99,6 +81,13 @@ if (!$stmt) {
 
 $stmt->bind_param('s', $borrowerId);
 $stmt->execute();
+
+if ($stmt->errno) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Execute error: ' . $stmt->error]);
+    exit;
+}
+
 $result = $stmt->get_result();
 $rows   = $result->fetch_all(MYSQLI_ASSOC);
 

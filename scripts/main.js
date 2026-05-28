@@ -26,9 +26,6 @@ function getFilters() {
 
 // ── Browse page ───────────────────────────────────────────────────────────────
 if (PATH.includes('browse.html')) {
-    const session = await fetch('../api/getSession.php').then(r => r.json());
-    const currentLenderId = session.success ? session.lender_id : null;
-
     injectItemGrid('#item-grid');
     injectFilters('#filter-container');
 

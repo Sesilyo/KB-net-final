@@ -29,6 +29,11 @@
         $returned_date = date('Y-m-d H:i:s');
     }
 
+    if ($returned_date && !$is_returned) {
+        $is_returned = 1;
+    }
+        
+
     $statement = $conn->prepare(
         "UPDATE transaction
             SET start_date    = ?,
@@ -64,6 +69,5 @@
         'affected_rows' => $statement->affected_rows
     ]);
 
-    $statement->close();
     $conn->close();
 ?>

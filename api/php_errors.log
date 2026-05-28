@@ -1,0 +1,10 @@
+[28-May-2026 07:19:48 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`kb_net`.`transaction`, CONSTRAINT `fk_transaction_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON UPDATE CASCADE) in C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php:36
+Stack trace:
+#0 C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php(36): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php on line 36
+[28-May-2026 07:21:22 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`kb_net`.`transaction`, CONSTRAINT `fk_transaction_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON UPDATE CASCADE) in C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php:36
+Stack trace:
+#0 C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php(36): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp\htdocs\cmsc127\KB-net-final\api\deleteItem.php on line 36

@@ -19,9 +19,6 @@ function toDateTimeLocal(dt) {
 
 function borrowerView(tx) {
     const statusClass = tx.status?.toLowerCase() ?? 'active';
-    const overdueRow  = tx.status === 'Overdue' && tx.overdue_penalty > 0
-        ? `<p class="tx-overdue-fee">⚠ Overdue penalty: ₱${Number(tx.overdue_penalty).toFixed(2)}</p>`
-        : '';
 
     return `
     <p class="tx-counterpart">Lender: ${tx.lender_name ?? '-'}</p>
@@ -30,7 +27,6 @@ function borrowerView(tx) {
     <p><strong>Returned:</strong>    ${formatDateTime(tx.returned_date)}</p>
     <p><strong>Total Cost:</strong>  ₱${Number(tx.total_cost).toFixed(2)}</p>
     <p><strong>Notes:</strong>       ${tx.notes ?? '-'}</p>
-    ${overdueRow}
     <span class="tx-status-label ${statusClass}">${tx.status ?? '-'}</span>`;
 }
 
@@ -57,11 +53,6 @@ function lenderEditForm(tx) {
     </label>
     <label class="tx-info-label">Notes
         <textarea class="tx-notes">${tx.notes ?? ''}</textarea>
-    </label>
-    <label class="tx-info-label">Penalty Fee
-        <input class="tx-penalty" type="number" step="0.01"
-            value="${tx.penalty_fee ?? '0.00'}">
-        <small>Auto-calculated. Edit only if manual correction is needed.</small>
     </label>
     <button class="tx-save-btn" data-id="${tx.transaction_id}">
         Save changes
@@ -92,22 +83,31 @@ async function saveTransaction(card) {
     btn.disabled    = true;
     btn.textContent = 'Saving…';
 
+    const returnedRaw = card.querySelector('.tx-returned-date').value;
+
     const payload = {
         transaction_id: card.dataset.id,
-        start_date:     card.querySelector('.tx-start').value.replace('T', ' '),
-        end_date:       card.querySelector('.tx-end').value.replace('T', ' '),
-        returned_date:  card.querySelector('.tx-returned-date').value.replace('T', ' '),
+        start_date:     card.querySelector('.tx-start').value.replace('T', ' ') || null,
+        end_date:       card.querySelector('.tx-end').value.replace('T', ' ')   || null,
+        returned_date:  returnedRaw ? returnedRaw.replace('T', ' ') : null,
         is_returned:    card.querySelector('.tx-returned').checked ? 1 : 0,
         notes:          card.querySelector('.tx-notes').value,
-        penalty_fee:    card.querySelector('.tx-penalty').value,
     };
 
     try {
-        const res  = await fetch('../api/updateTransaction.php', {
+        const res = await fetch('../api/updateTransaction.php', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify(payload),
         });
+
+        if (!res.ok) {
+            const raw = await res.text();
+            console.error(`HTTP ${res.status} from updateTransaction.php:`, raw);
+            alert(`Server error (${res.status}). Check the console for details.`);
+            return;
+        }
+
         const data = await res.json();
         if (data.success) {
             alert('Transaction updated!');
@@ -123,7 +123,7 @@ async function saveTransaction(card) {
     }
 }
 
-// statusFilter: '' | 'active' | 'overdue' | 'returned'
+// statusFilter: '' | 'active' | 'returned'
 async function injectTransactions(containerId, role, statusFilter = '') {
     const container = document.getElementById(containerId);
     container.innerHTML = '<p class="tx-loading">Loading transactions…</p>';

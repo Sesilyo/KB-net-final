@@ -4,6 +4,8 @@
 header('Content-Type: application/json');
 
 require_once '../DBConnector.php';
+
+// Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
     exit;
@@ -31,6 +33,13 @@ if (!$item) {
     echo json_encode(['success' => false, 'message' => 'Item not found.']);
     exit;
 }
+
+// Nullify item_id in transaction history so records are preserved
+// NOTE: your transaction.item_id column must allow NULL for this to work
+$stmt = $conn->prepare("UPDATE transaction SET item_id = NULL WHERE item_id = ?");
+$stmt->bind_param("i", $item_id);
+$stmt->execute();
+$stmt->close();
 
 // Delete the item from the database
 $stmt = $conn->prepare("DELETE FROM item WHERE item_id = ?");
