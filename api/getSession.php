@@ -1,7 +1,0 @@
-<!-- <?php
-session_start();
-header('Content-Type: application/json');
-
-echo json_encode([
-    'lender_id' => $_SESSION['lender_id'] ?? null,
-]); -->
